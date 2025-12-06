@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #0d1117;       /* clean dark theme */ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Title */
+h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #00d4ff;
+  letter-spacing: 1px;
+}
+
+/* Button */
+button {
+  padding: 12px 20px;
+  background: #00d4ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: .3s ease;
+}
+
+button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* User Card */
+#user {
+  width: 330px;
+  background: #161b22;  /* GitHub dark theme */
+  padding: 20px;
+  border-radius: 12px;
+  border: #fff;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+/* User Image */
+#user img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  margin: 15px 0;
+  border: 3px solid #00d4ff;
+}
+
+/* Credentials */
+#user h3 {
+  line-height: 1.6;
+  font-weight: normal;
+  color: #c9d1d9;
+}
+
+</style>
+</head>
+<body>
+  <h1>Profile Craft</h1>
+  <button onclick ="fetchApi()">Generate Ran User</button>
+  <div id="user">
+    
+  </div>
+  
+  <script>
+    async function fetchApi(){
+        
+      try{
+      let response = await fetch('https://randomuser.me/api/');
+      let drop = await response.json();
+      let container = document.getElementById('user');
+      
+      
+      let userDetails = drop.results[0];
+      let name = `${userDetails.name.title}.${userDetails.name.first} ${userDetails.name.last}`;
+      let pic = userDetails.picture.large;
+      let credentials = `Username : ${userDetails.login.username} <br> Password : ${userDetails.login.password}`;
+      container.innerHTML= `<h1>${name}</h1> <img src="${pic}"> <h3>${credentials}
+      </h3>`
+      }
+      catch(err){
+        container.innerHTML="<h3> Something went wrong</h3>"
+      }
+    }
+    
+  </script>
+</body>
+</html>
